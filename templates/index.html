@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#textfield').bind('input propertychange', function(){
+                $(this).next().empty()
+                //console.log($(this).next())
+                var word=$(this).val()
+                var list=[]
+                if($(this).val().length!=0) {
+                    //console.log($(this).val().length)
+                    $(this).next().show()
+                }else{
+                    $(this).next().hide()
+                    return false
+                }
+
+                $.ajax({
+                    url:{% url 'search'%},
+                    type:'post',
+                    data:{
+                        'word':word
+                    },
+                    dataType:'json',
+                    success: function(data) {
+                        for(var word in data){
+                            list.push(data[word].word)
+                            //console(data[word].index())
+                            //console.log(data[word].word)
+                            $('#search_text').append('<p class="base_input">'+'<a href="#">'+data[word].word+'</a>'+'</p>')
+                        }
+                        //console.log(list[0])
+                        //$('#textfield').attr('placeholder',list[0])
+                    }
+                });
+
+            })
+        });
+    </script>
+    <style type="text/css">
+        .base{
+            float:left;
+            width:100%;
+            border:1px solid #006666;
+            padding:0px;
+            margin:0px;
+        }
+        .base_input{
+            float:left;
+            width:100%;
+            border:1px #006666;
+            padding:0px;
+            margin:0px;
+        }
+    </style>
+</head>
+<body>
+<div style="width:200px;background:#666666">
+<input name="textfield" type="text" id="textfield" value="" class="base" />
+    <div class="base_input" style="display: none" id="search_text">
+    </div>
+</div>
+</body>
+</html>
