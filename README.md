@@ -1,2 +1,2 @@
 # SearchTips
-这是一个关于搜索框自动补全的案例，运行manage.py可直接查看效果
+这是一个关于搜索框自动补全的案例，数据库配置为SSQLITE，运行manage.py可直接查看效果,如果需要修改为Mysql，请在settings文件中修改
